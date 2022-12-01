@@ -99,6 +99,35 @@ class Elementor_ACR_Card extends \Elementor\Widget_Base {
 				'selector' => '{{WRAPPER}} h3',
 			]
 		);
+
+		$this->add_control(
+			'description_options',
+			[
+				'label' => esc_html__( 'Description Options', 'elementor-acr-addon' ),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);      
+	
+		$this->add_control(
+			'description_color',
+			[
+				'label' => esc_html__( 'Color', 'elementor-acr-addon' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#f00',
+				'selectors' => [
+					'{{WRAPPER}} .card__description' => 'color: {{VALUE}}',
+				],
+			]
+		);
+	
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'description_typography',
+				'selector' => '{{WRAPPER}} p.card__description',
+			]
+		); 
 		
 		$this->end_controls_section();
 
