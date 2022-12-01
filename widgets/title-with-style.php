@@ -1,4 +1,5 @@
 <?php
+
 class Elementor_ACR_Title_With_Style extends \Elementor\Widget_Base {
 
 	public function get_name() {
@@ -18,7 +19,7 @@ class Elementor_ACR_Title_With_Style extends \Elementor\Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'title', 'world' ];
+		return [ 'title', 'acr' ];
 	}
 
 	protected function register_controls() {
@@ -42,6 +43,23 @@ class Elementor_ACR_Title_With_Style extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'website_link',
+			[
+				'label' => esc_html__( 'Link', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::URL,
+				'placeholder' => esc_html__( 'https://your-link.com', 'textdomain' ),
+				'options' => [ 'url', 'is_external', 'nofollow' ],
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+					'nofollow' => true,
+					// 'custom_attributes' => '',
+				],
+				'label_block' => true,
+			]
+		);
+
 		$this->end_controls_section();
 
 		// Content Tab End
@@ -60,40 +78,11 @@ class Elementor_ACR_Title_With_Style extends \Elementor\Widget_Base {
 		$this->add_control(
 			'title_color',
 			[
-				'label' => esc_html__( 'Text Color', 'elementor-addon' ),
+				'label' => esc_html__( 'Color', 'elementor-addon' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} p.title' => 'color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'space_between',
-			[
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Spacing', 'textdomain' ),
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'devices' => [ 'desktop', 'tablet', 'mobile' ],
-				'desktop_default' => [
-					'size' => 30,
-					'unit' => 'px',
-				],
-				'tablet_default' => [
-					'size' => 20,
-					'unit' => 'px',
-				],
-				'mobile_default' => [
-					'size' => 10,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .title a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} h2.title' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -101,7 +90,7 @@ class Elementor_ACR_Title_With_Style extends \Elementor\Widget_Base {
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			[
-				'name' => 'content_typography',
+				'name' => 'title_typography',
 				'selector' => '{{WRAPPER}} .title',
 			]
 		);
@@ -140,10 +129,23 @@ class Elementor_ACR_Title_With_Style extends \Elementor\Widget_Base {
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
+
+		$title = $settings['title'];
+		$website_link = $settings['website_link'];
+
 		?>
-		<p class="title">
-			<?php echo $settings['title']; ?>
-		</p>
+		<h2 class="title">
+		<?php
+		if(! empty( $website_link['url'] )){ ?>
+			<a href="<?php echo $this->get_render_attribute_string( $website_link['url'] ); ?>">
+				<?php echo $title; ?>
+			</a>
+		<?php
+		} else {
+			echo $title;
+		} ?>
+		</h2>
 		<?php
 	}
+
 }
