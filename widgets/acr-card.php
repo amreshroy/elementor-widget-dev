@@ -56,6 +56,23 @@ class Elementor_ACR_Card extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'website_link',
+			[
+				'label' => esc_html__( 'Link', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::URL,
+				'placeholder' => esc_html__( 'https://your-link.com', 'textdomain' ),
+				'options' => [ 'url', 'is_external', 'nofollow' ],
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+					'nofollow' => true,
+					// 'custom_attributes' => '',
+				],
+				'label_block' => true,
+			]
+		);
+
 		$this->end_controls_section();
 
 		// Content Tab End
@@ -184,7 +201,7 @@ class Elementor_ACR_Card extends \Elementor\Widget_Base {
 		$this->end_controls_section();
 
 		// Style Tab End
-}
+	}
 
 	protected function render() {
 
@@ -194,15 +211,23 @@ class Elementor_ACR_Card extends \Elementor\Widget_Base {
 	// get the individual values of the input
 	$card_title = $settings['card_title'];
 	$card_description = $settings['card_description'];
+	
+		if ( ! empty( $settings['website_link']['url'] ) ) {
+			$this->add_link_attributes( 'website_link', $settings['website_link'] );
+		?>
+			<!-- Start rendering the output -->
+			<div class="card">
+				<a <?php echo $this->get_render_attribute_string( 'website_link' ); ?>> <h3 class="card_title"><?php echo $card_title;  ?></h3></a>
+				<p class= "card__description"><?php echo $card_description;  ?></p>
+			</div>
+			<!-- End rendering the output -->
 
-	?>
-		<!-- Start rendering the output -->
-		<div class="card">
+			<?php
+		} else { ?>
+			<div class="card">
 			<h3 class="card_title"><?php echo $card_title;  ?></h3>
 			<p class= "card__description"><?php echo $card_description;  ?></p>
-		</div>
-		<!-- End rendering the output -->
-
-		<?php
+		</div> <?php
+		}
 	}
 }
