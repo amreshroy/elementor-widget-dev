@@ -101,6 +101,32 @@ class Elementor_ACR_Card extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'card_title_alignment',
+			[
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'label' => esc_html__( 'Alignment', 'textdomain' ),
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'textdomain' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'textdomain' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'textdomain' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .card_title' => 'text-align: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
 			'description_options',
 			[
 				'label' => esc_html__( 'Description Options', 'elementor-acr-addon' ),
@@ -127,7 +153,33 @@ class Elementor_ACR_Card extends \Elementor\Widget_Base {
 				'name' => 'description_typography',
 				'selector' => '{{WRAPPER}} p.card__description',
 			]
-		); 
+		);
+		
+		$this->add_control(
+			'card_description_alignment',
+			[
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'label' => esc_html__( 'Alignment', 'textdomain' ),
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'textdomain' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'textdomain' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'textdomain' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .card__description' => 'text-align: {{VALUE}};',
+				],
+			]
+		);
 		
 		$this->end_controls_section();
 
