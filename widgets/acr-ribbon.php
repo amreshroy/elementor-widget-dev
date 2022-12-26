@@ -1,13 +1,13 @@
 <?php
 
-class Elementor_ACR_Card extends \Elementor\Widget_Base {
+class Elementor_ACR_Ribbon extends \Elementor\Widget_Base {
 
 	public function get_name() {
-		return 'acr-card';
+		return 'acr-ribbon';
 	}
 
 	public function get_title() {
-		return esc_html__( 'ACR Card', 'elementor-acr-addon' );
+		return esc_html__( 'ACR Ribbon', 'elementor-acr-addon' );
 	}
 
 	public function get_icon() {
@@ -19,12 +19,12 @@ class Elementor_ACR_Card extends \Elementor\Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'card', 'acr' ];
+		return [ 'ribbon', 'acr' ];
 	}
 
 	public function get_style_depends() {
 
-		wp_register_style( 'ribbon-widget-style', plugins_url( '/css/style.css', __FILE__ ) );
+
 
 		return [
 			'ribbon-widget-style',
@@ -44,14 +44,15 @@ class Elementor_ACR_Card extends \Elementor\Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'card_title',
+        // Ribbon Text
+        $this->add_control(
+			'ribbon_text',
 			[
-				'label' => esc_html__( 'Card title', 'elementor-acr-addon' ),
+				'label' => esc_html__( 'Ribbon Text', 'elementor-acr-addon' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'label_block' => true,
-				'placeholder' => esc_html__( 'Your card title here', 'elementor-acr-addon' ),
-				'default' => esc_html__( 'Card Title', 'elementor-acr-addon' ),
+				'placeholder' => esc_html__( 'Your ribbon text here', 'elementor-acr-addon' ),
+				'default' => esc_html__( 'Ribbon Text', 'elementor-acr-addon' ),
 			]
 		);
 
@@ -62,23 +63,54 @@ class Elementor_ACR_Card extends \Elementor\Widget_Base {
 			]
 		);
 
+        // Ribbon Title Text
 		$this->add_control(
-			'card_description',
+			'ribbon_title',
 			[
-			'label' => esc_html__( 'Card Description', 'elementor-acr-addon' ),
-			'type' => \Elementor\Controls_Manager::TEXTAREA,
-			'label_block'   => true,
-			'placeholder' => esc_html__( 'Your card description here', 'elementor-acr-addon' ),
-			'default' => esc_html__( 'Card Description', 'elementor-acr-addon' ),
+				'label' => esc_html__( 'Ribbon Title', 'elementor-acr-addon' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'label_block' => true,
+				'placeholder' => esc_html__( 'Your ribbon title here', 'elementor-acr-addon' ),
+				'default' => esc_html__( 'Ribbon Title', 'elementor-acr-addon' ),
 			]
 		);
 
 		$this->add_control(
-			'website_link',
+			'hr',
 			[
-				'label' => esc_html__( 'Link', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::DIVIDER,
+			]
+		);
+
+        // Ribbon Content Text
+		$this->add_control(
+			'ribbon_content',
+			[
+			'label' => esc_html__( 'Ribbon Content', 'elementor-acr-addon' ),
+			'type' => \Elementor\Controls_Manager::TEXTAREA,
+			'label_block'   => true,
+			'placeholder' => esc_html__( 'Your ribbon description here', 'elementor-acr-addon' ),
+			'default' => esc_html__( 'Ribbon Content', 'elementor-acr-addon' ),
+			]
+		);
+
+        // Ribbon Button Title Text
+		$this->add_control(
+			'ribbon_button_title',
+			[
+				'label' => esc_html__( 'Button Title', 'elementor-acr-addon' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'label_block' => true,
+				'placeholder' => esc_html__( 'Your button title here', 'elementor-acr-addon' ),
+				'default' => esc_html__( 'Button Title', 'elementor-acr-addon' ),
+			]
+		);
+		$this->add_control(
+			'button_link',
+			[
+				'label' => esc_html__( 'Button Link', 'elementor-acr-addon' ),
 				'type' => \Elementor\Controls_Manager::URL,
-				'placeholder' => esc_html__( 'https://your-link.com', 'textdomain' ),
+				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-acr-addon' ),
 				'options' => [ 'url', 'is_external', 'nofollow' ],
 				'default' => [
 					'url' => '',
@@ -133,7 +165,7 @@ class Elementor_ACR_Card extends \Elementor\Widget_Base {
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '#f00',
 				'selectors' => [
-					'{{WRAPPER}} h3' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .ribbon-title' => 'color: {{VALUE}}',
 				],
 				'condition' => [
 					'show_title' => 'yes',
@@ -145,7 +177,7 @@ class Elementor_ACR_Card extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			[
 				'name' => 'title_typography',
-				'selector' => '{{WRAPPER}} h3',
+				'selector' => '{{WRAPPER}} .ribbon-title',
 				'condition' => [
 					'show_title' => 'yes',
 				],
@@ -153,7 +185,7 @@ class Elementor_ACR_Card extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'card_title_alignment',
+			'ribbon_title_alignment',
 			[
 				'type' => \Elementor\Controls_Manager::CHOOSE,
 				'label' => esc_html__( 'Alignment', 'textdomain' ),
@@ -173,28 +205,28 @@ class Elementor_ACR_Card extends \Elementor\Widget_Base {
 				],
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .card_title' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .ribbon-title' => 'text-align: {{VALUE}};',
 				],
 			]
 		);
 
 		$this->add_control(
-			'description_options',
+			'content_options',
 			[
-				'label' => esc_html__( 'Description Options', 'elementor-acr-addon' ),
+				'label' => esc_html__( 'Content Options', 'elementor-acr-addon' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
 		);      
 	
 		$this->add_control(
-			'description_color',
+			'content_color',
 			[
 				'label' => esc_html__( 'Color', 'elementor-acr-addon' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '#f00',
 				'selectors' => [
-					'{{WRAPPER}} .card__description' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .package-content' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -202,33 +234,33 @@ class Elementor_ACR_Card extends \Elementor\Widget_Base {
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			[
-				'name' => 'description_typography',
-				'selector' => '{{WRAPPER}} p.card__description',
+				'name' => 'content_typography',
+				'selector' => '{{WRAPPER}} .package-content',
 			]
 		);
 		
 		$this->add_control(
-			'card_description_alignment',
+			'ribbon_content_alignment',
 			[
 				'type' => \Elementor\Controls_Manager::CHOOSE,
-				'label' => esc_html__( 'Alignment', 'textdomain' ),
+				'label' => esc_html__( 'Alignment', 'elementor-acr-addon' ),
 				'options' => [
 					'left' => [
-						'title' => esc_html__( 'Left', 'textdomain' ),
+						'title' => esc_html__( 'Left', 'elementor-acr-addon' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => esc_html__( 'Center', 'textdomain' ),
+						'title' => esc_html__( 'Center', 'elementor-acr-addon' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => esc_html__( 'Right', 'textdomain' ),
+						'title' => esc_html__( 'Right', 'elementor-acr-addon' ),
 						'icon' => 'eicon-text-align-right',
 					],
 				],
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .card__description' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .package-content' => 'text-align: {{VALUE}};',
 				],
 			]
 		);
@@ -244,28 +276,25 @@ class Elementor_ACR_Card extends \Elementor\Widget_Base {
 	$settings = $this->get_settings_for_display();
 
 	// get the individual values of the input
-	$card_title = $settings['card_title'];
-	$card_description = $settings['card_description'];
-	
-		if ( 'yes' === $settings['show_title'] ) {
+	$ribbon_text = $settings['ribbon_text'];
+	$ribbon_title = $settings['ribbon_title'];
+	$ribbon_content = $settings['ribbon_content'];
+	$ribbon_button_title = $settings['ribbon_button_title'];
 
-			if ( ! empty( $settings['website_link']['url'] ) ) {
-				$this->add_link_attributes( 'website_link', $settings['website_link'] );
-			?>
-				<!-- Start rendering the output -->
-				<div class="card">
-					<a <?php echo $this->get_render_attribute_string( 'website_link' ); ?>> <h3 class="card_title"><?php echo $card_title;  ?></h3></a>
-					<p class= "card__description"><?php echo $card_description;  ?></p>
-				</div>
-				<!-- End rendering the output -->
+        // ACR Ribbon Widget
+        ?>
+        <div class="product">
+            <div class="ribbon-wrapper">
+                <div class="ribbon"><?php echo $ribbon_text; ?></div>
+            </div>
+            <div class="ribbon-content">
+                <div class="ribbon-title"> <?php echo $ribbon_title; ?> </div>
+                <div class="package-content"> <?php echo $ribbon_content; ?>
+                </div>
+                <div class="ribbon-button"> <button><a href="<?php echo $this->get_render_attribute_string( 'website_link' ); ?>"> <?php echo $ribbon_button_title;  ?> </a></button></div>
+            </div>
+        </div>
 
-				<?php
-			} else { ?>
-				<div class="card">
-				<h3 class="card_title"><?php echo $card_title;  ?></h3>
-				<p class= "card__description"><?php echo $card_description;  ?></p>
-			</div> <?php
-			}
-		}
+        <?php
 	}
 }

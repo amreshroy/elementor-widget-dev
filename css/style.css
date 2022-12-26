@@ -1,0 +1,65 @@
+.product {
+    margin: 50px auto;
+    width: 280px;
+    height: 370px;
+    background: white;
+    border: 2px solid #333;
+    position: relative;
+    z-index: 90;
+  }
+  .ribbon-wrapper {
+    width: 95px;
+    height: 98px;
+    overflow: hidden;
+    position: absolute;
+    top: -3px;
+    left: -3px;
+  }
+    .ribbon {
+      font: bold 15px sans-serif;
+      color: #333;
+      text-align: center;
+      -webkit-transform: rotate(-45deg);
+      -moz-transform:    rotate(-45deg);
+      -ms-transform:     rotate(-45deg);
+      -o-transform:      rotate(-45deg);
+      position: relative;
+      padding: 7px 0;
+      top: 25px;
+      left: -35px;
+      width: 140px;
+      background-color: #ebb134;
+      color: #fff;
+    }
+  .ribbon-title{
+    color: red;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-family: arial;
+    margin-top: 30px;
+  }
+  .package-content ul li{
+    color: red;
+    list-style: square;
+  }
+  .package-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .package-content ul{
+    margin-left: -30px;
+  }
+  .ribbon-button{
+    text-align: center;
+    padding: 20px;
+  }
+  .ribbon-button button{
+    padding: 10px 20px;
+    font: bold 15px sans-serif;
+    background: orange;
+    color: #fff;
+    border: 2px solid red;
+  }
