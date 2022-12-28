@@ -94,6 +94,50 @@ class Elementor_ACR_Ribbon extends \Elementor\Widget_Base {
 			]
 		);
 
+		// Ribbon content repeater
+		$this->add_control(
+			'list',
+			[
+				'label' => esc_html__( 'Repeater List', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::REPEATER,
+				'fields' => [
+					[
+						'name' => 'list_title',
+						'label' => esc_html__( 'Title', 'textdomain' ),
+						'type' => \Elementor\Controls_Manager::TEXT,
+						'default' => esc_html__( 'List Title' , 'textdomain' ),
+						'label_block' => true,
+					],
+					[
+						'name' => 'list_content',
+						'label' => esc_html__( 'Content', 'textdomain' ),
+						'type' => \Elementor\Controls_Manager::WYSIWYG,
+						'default' => esc_html__( 'List Content' , 'textdomain' ),
+						'show_label' => false,
+					],
+					[
+						'name' => 'list_color',
+						'label' => esc_html__( 'Color', 'textdomain' ),
+						'type' => \Elementor\Controls_Manager::COLOR,
+						'selectors' => [
+							'{{WRAPPER}} {{CURRENT_ITEM}}' => 'color: {{VALUE}}'
+						],
+					]
+				],
+				'default' => [
+					[
+						'list_title' => esc_html__( 'Title #1', 'textdomain' ),
+						'list_content' => esc_html__( 'Item content. Click the edit button to change this text.', 'textdomain' ),
+					],
+					[
+						'list_title' => esc_html__( 'Title #2', 'textdomain' ),
+						'list_content' => esc_html__( 'Item content. Click the edit button to change this text.', 'textdomain' ),
+					],
+				],
+				'title_field' => '{{{ list_title }}}',
+			]
+		);
+
         // Ribbon Button Title Text
 		$this->add_control(
 			'ribbon_button_title',
@@ -138,7 +182,7 @@ class Elementor_ACR_Ribbon extends \Elementor\Widget_Base {
 		// OUR CODE FOR STYLE OPTIONS WILL BE HERE
 
 		$this->add_control(
-			'title_options',
+			'ribbon_title_options',
 			[
 				'label' => esc_html__( 'Title Options', 'elementor-acr-addon' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
@@ -147,28 +191,13 @@ class Elementor_ACR_Ribbon extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'show_title',
-			[
-				'label' => esc_html__( 'Show Title', 'elementor-acr-addon' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Show', 'textdomain' ),
-				'label_off' => esc_html__( 'Hide', 'textdomain' ),
-				'return_value' => 'yes',
-				'default' => 'yes',
-			]
-		);
-
-		$this->add_control(
-			'title_color',
+			'ribbon_title_color',
 			[
 				'label' => esc_html__( 'Color', 'elementor-acr-addon' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '#f00',
 				'selectors' => [
-					'{{WRAPPER}} .ribbon-title' => 'color: {{VALUE}}',
-				],
-				'condition' => [
-					'show_title' => 'yes',
+					'{{WRAPPER}} .acr-ribbon-title' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -177,15 +206,12 @@ class Elementor_ACR_Ribbon extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			[
 				'name' => 'title_typography',
-				'selector' => '{{WRAPPER}} .ribbon-title',
-				'condition' => [
-					'show_title' => 'yes',
-				],
+				'selector' => '{{WRAPPER}} .acr-ribbon-title',
 			]
 		);
 
 		$this->add_control(
-			'ribbon_title_alignment',
+			'acr_ribbon_title_alignment',
 			[
 				'type' => \Elementor\Controls_Manager::CHOOSE,
 				'label' => esc_html__( 'Alignment', 'textdomain' ),
@@ -205,13 +231,13 @@ class Elementor_ACR_Ribbon extends \Elementor\Widget_Base {
 				],
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .ribbon-title' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .acr-ribbon-title' => 'text-align: {{VALUE}};',
 				],
 			]
 		);
 
 		$this->add_control(
-			'content_options',
+			'acr_content_options',
 			[
 				'label' => esc_html__( 'Content Options', 'elementor-acr-addon' ),
 				'type' => \Elementor\Controls_Manager::HEADING,
@@ -220,7 +246,7 @@ class Elementor_ACR_Ribbon extends \Elementor\Widget_Base {
 		);      
 	
 		$this->add_control(
-			'content_color',
+			'acr_content_color',
 			[
 				'label' => esc_html__( 'Color', 'elementor-acr-addon' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
@@ -289,8 +315,7 @@ class Elementor_ACR_Ribbon extends \Elementor\Widget_Base {
             </div>
             <div class="ribbon-content">
                 <div class="ribbon-title"> <?php echo $ribbon_title; ?> </div>
-                <div class="package-content"> <?php echo $ribbon_content; ?>
-                </div>
+                <div class="package-content"> <?php echo $ribbon_content; ?></div>
                 <div class="ribbon-button"> <button><a href="<?php echo $this->get_render_attribute_string( 'website_link' ); ?>"> <?php echo $ribbon_button_title;  ?> </a></button></div>
             </div>
         </div>
